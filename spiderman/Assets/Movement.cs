@@ -9,8 +9,22 @@ public class Movement : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
    public Joystick  joystick ;
+   public Text scoreTextMesh; 
+   private int score = 0;
+    
    public void Jump (){
         rb.AddForce(new Vector3(0,10,0), ForceMode.Impulse);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Check if the collided object has the tag "Meat"
+        if (collision.gameObject.CompareTag("meat"))
+        {
+            score++;
+            scoreTextMesh.text = "Score: " + score;
+            Debug.Log("Score: " + score);
+            Destroy(collision.gameObject);
+        }
     }
     void Start()
     {
